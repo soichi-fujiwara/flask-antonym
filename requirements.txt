@@ -1,0 +1,7 @@
+Flask
+numpy
+pandas
+mecab-python3
+gensim
+google-cloud-storage
+gunicorn
