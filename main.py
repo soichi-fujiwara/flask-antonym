@@ -48,9 +48,9 @@ def index():
 
     #Blobを作成
     blob = gcs.Blob(fname, bucket)
-    blob = pickle.Unpickler(blob)
     #★modelがbytesオブジェクトだと後続でエラーとなる
-#     content = blob.download_as_string()
+    content = blob.download_as_string()
+    model = pickle.Unpickler(content)
 
 #     model = pickle.loads(pickle.dumps(content))
 #     model = pickle.load(open(BytesIO(content), 'rb'))
@@ -62,7 +62,7 @@ def index():
 
 #     rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
 #     rev_word = rev_list[1]
-    rev_word = type(blob)
+    rev_word = type(model)
 
     return render_template('index.html',message=message,name=name,title=title,rev_word=rev_word)
   else:
