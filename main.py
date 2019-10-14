@@ -48,8 +48,9 @@ def index():
     #Blobを作成
     blob = gcs.Blob(fname, bucket)
     #★modelがbytesオブジェクトだと後続でエラーとなる
-    model = blob.download_as_string()
-
+    content = blob.download_as_string()
+    model = pickle.load(open(BytesIO(content),'rb'))
+    
     #MAIN
     words = words[0:16]
     gyaku = u"逆"
