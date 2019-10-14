@@ -3,6 +3,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import numpy as np
 import pickle
+from io import BytesIO
 from gensim.models import KeyedVectors
 
 #対義語生成
