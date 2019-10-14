@@ -48,6 +48,7 @@ def index():
 
     #Blobを作成
     blob = gcs.Blob(fname, bucket)
+    blob = pickle.Unpickler(blob)
     #★modelがbytesオブジェクトだと後続でエラーとなる
 #     content = blob.download_as_string()
 
