@@ -44,7 +44,7 @@ def index():
     bucket = client.get_bucket(bucket_name)
     blob = bucket.get_blob(fname)
     #このメソッドだとローカルにファイルを生成しない
-    model = pickle.load(blob.download_as_string())
+    model = pickle.loads(blob.download_as_string())
 
 #     model = pickle.loads(pickle.dumps(content))
 #     model = pickle.load(open(BytesIO(content), 'rb'))
