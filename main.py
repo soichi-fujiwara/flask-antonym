@@ -46,17 +46,13 @@ def index():
     #このメソッドだとローカルにファイルを生成しない
     model = pickle.loads(blob.download_as_string())
 
-#     model = pickle.loads(pickle.dumps(content))
-#     model = pickle.load(open(BytesIO(content), 'rb'))
-    
-#     #MAIN
-#     words = words[0:16]
-#     gyaku = u"逆"
-#     inherent_words = '[' + words + ']'
+    #MAIN
+    words = words[0:16]
+    gyaku = u"逆"
+    inherent_words = '[' + words + ']'
 
-#     rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
-#     rev_word = rev_list[1]
-    rev_word = type(model)
+    rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
+    rev_word = rev_list[1]
 
     return render_template('index.html',message=message,name=name,title=title,rev_word=rev_word)
   else:
