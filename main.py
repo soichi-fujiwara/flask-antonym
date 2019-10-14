@@ -60,8 +60,7 @@ if request.method == 'POST':
   rev_word = rev_list[1]
 
   name = request.form['name']
-  return render_template('index.html',
-                       name=name, title=title,rev_word=rev_word)
+  return render_template('index.html',name=name, title=title,rev_word=rev_word)
 else:
   return redirect(url_for('index'))
 
