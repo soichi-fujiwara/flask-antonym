@@ -37,7 +37,7 @@ def index():
     import pandas as pd
 
     bucket_name = 'ml_bucket_01'
-    fname = 'wiki_tohoku_pkl_500000.sav'
+    fname = 'wiki_tohoku_pkl_20000.sav'
     project_name = 'My First Project'
 
     client = gcs.Client()
