@@ -28,41 +28,41 @@ def index():
   return render_template('index.html',
                        message=message, title=title)
 
-if request.method == 'POST':
+  if request.method == 'POST':
 
-  rev_word = ""
-  words = request.form['name']
+    rev_word = ""
+    words = request.form['name']
 
-  from google.cloud import storage as gcs
-  import pandas as pd
+    from google.cloud import storage as gcs
+    import pandas as pd
 
-  bucket_name = 'ml_bucket_01'
-  fname = 'wiki_tohoku_pkl_500000.sav'
-  project_name = 'My First Project'
+    bucket_name = 'ml_bucket_01'
+    fname = 'wiki_tohoku_pkl_500000.sav'
+    project_name = 'My First Project'
 
-  #プロジェクト名を指定してclientを作成
-  client = gcs.Client(project_name)
+    #プロジェクト名を指定してclientを作成
+    client = gcs.Client(project_name)
 
-  #バケット名を指定してbucketを取得
-  bucket = client.get_bucket(bucket_name)
+    #バケット名を指定してbucketを取得
+    bucket = client.get_bucket(bucket_name)
 
-  #Blobを作成
-  blob = gcs.Blob(fname, bucket)
-  #content = blob.download_as_string()
-  model = blob.download_as_string()
+    #Blobを作成
+    blob = gcs.Blob(fname, bucket)
+    #content = blob.download_as_string()
+    model = blob.download_as_string()
 
-  #MAIN
-  words = words[0:15]
-  gyaku = u"逆"
-  inherent_words = '[' + words + ']'
+    #MAIN
+    words = words[0:15]
+    gyaku = u"逆"
+    inherent_words = '[' + words + ']'
 
-  rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
-  rev_word = rev_list[1]
+    rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
+    rev_word = rev_list[1]
 
-  name = request.form['name']
-  return render_template('index.html',name=name, title=title,rev_word=rev_word)
-else:
-  return redirect(url_for('index'))
+    name = request.form['name']
+    return render_template('index.html',name=name, title=title,rev_word=rev_word)
+  else:
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.debug = True
