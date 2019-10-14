@@ -48,6 +48,8 @@ def index():
     #Blobを作成
     blob = gcs.Blob(fname, bucket)
     #content = blob.download_as_string()
+
+    #★modelがbytesオブジェクトだと後続でエラーとなる
     model = blob.download_as_string()
 
     #MAIN
