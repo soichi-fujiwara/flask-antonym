@@ -58,6 +58,7 @@ def index():
 
     rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
     rev_word = rev_list[1]
+    rev_word = "ABC"
 
     name = request.form['name']
     return render_template('index.html',name=name, title=title,rev_word=rev_word)
