@@ -40,17 +40,11 @@ def index():
     fname = 'wiki_tohoku_pkl_500000.sav'
     project_name = 'My First Project'
 
-    #プロジェクト名を指定してclientを作成
-    client = gcs.Client(project_name)
-
-    #バケット名を指定してbucketを取得
+    client = gcs.Client()
     bucket = client.get_bucket(bucket_name)
-
-    #Blobを作成
-    blob = gcs.Blob(fname, bucket)
-    #★modelがbytesオブジェクトだと後続でエラーとなる
-    content = blob.download_as_string()
-    model = pickle.load(content)
+    blob = bucket.get_blob(fname)
+    #このメソッドだとローカルにファイルを生成しない
+    model = pickle.load(blob.download_as_string())
 
 #     model = pickle.loads(pickle.dumps(content))
 #     model = pickle.load(open(BytesIO(content), 'rb'))
@@ -62,7 +56,7 @@ def index():
 
 #     rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
 #     rev_word = rev_list[1]
-    rev_word = type(content)
+    rev_word = type(model)
 
     return render_template('index.html',message=message,name=name,title=title,rev_word=rev_word)
   else:
