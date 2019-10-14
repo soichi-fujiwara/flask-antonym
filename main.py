@@ -50,6 +50,7 @@ def index():
     blob = gcs.Blob(fname, bucket)
     #★modelがbytesオブジェクトだと後続でエラーとなる
     content = blob.download_as_string()
+    model = KeyedVectors.load(content)
 
 #     model = pickle.loads(pickle.dumps(content))
 #     model = pickle.load(open(BytesIO(content), 'rb'))
