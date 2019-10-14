@@ -29,7 +29,7 @@ def index():
   if request.method == 'POST':
 
     rev_word = ""
-    words = request.form['name']
+    words = request.form['name'].decode(encoding='utf-8')
     name = request.form['name']
 
     from google.cloud import storage as gcs
@@ -52,9 +52,9 @@ def index():
 
     #MAIN
     #Bytes型だとエラーになる為str型に変換
-    words = str(words[0:16])
+    words = words[0:16]
     gyaku = u"逆"
-    inherent_words = str('[' + words + ']')
+    inherent_words = '[' + words + ']'
 
     rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
     rev_word = rev_list[1]
