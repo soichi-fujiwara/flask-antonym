@@ -30,6 +30,7 @@ def index():
 
     rev_word = ""
     words = request.form['name']
+    name = request.form['name']
 
     from google.cloud import storage as gcs
     import pandas as pd
@@ -50,15 +51,14 @@ def index():
     model = blob.download_as_string()
 
     #MAIN
-    words = words[0:15]
+    #Bytes型だとエラーになる為str型に変換
+    words = str(words[0:16])
     gyaku = u"逆"
-    inherent_words = '[' + words + ']'
+    inherent_words = str('[' + words + ']')
 
     rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
     rev_word = rev_list[1]
-    rev_word = "ABC"
 
-    name = request.form['name']
     return render_template('index.html',message=message,name=name,title=title,rev_word=rev_word)
   else:
     return render_template('index.html',
