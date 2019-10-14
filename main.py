@@ -48,7 +48,7 @@ def index():
     #Blobを作成
     blob = gcs.Blob(fname, bucket)
     #★modelがbytesオブジェクトだと後続でエラーとなる
-    model = blob.download_as_string().decode()
+    model = blob.download_as_string()
 
     #MAIN
     words = words[0:16]
