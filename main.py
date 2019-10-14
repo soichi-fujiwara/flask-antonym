@@ -24,6 +24,7 @@ def picked_up():
 @app.route('/', methods=['POST', 'GET'])
 def index():
   title = "ようこそ！"
+  message = picked_up()
 
   if request.method == 'POST':
 
@@ -60,7 +61,8 @@ def index():
     name = request.form['name']
     return render_template('index.html',message=message,name=name,title=title,rev_word=rev_word)
   else:
-    return redirect(url_for('index'))
+    return render_template('index.html',
+                           message=message, title=title)
 
 if __name__ == '__main__':
     app.debug = True
