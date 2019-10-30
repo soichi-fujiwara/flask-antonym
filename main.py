@@ -14,15 +14,16 @@ app = Flask(__name__)
 def index():
 
   ant_word_list = []
-  words = request.form['words'][0:10]
 
   if request.method == 'POST':
 
     #対義語取得
+    words = request.form['words'][0:10]
     ant_word_list = ant.get_ant_word(words)
     return render_template('index.html',in_words=words,ant_word_list=ant_word_list)
   else:
     #初期表示
+    words = ""
     return render_template('index.html',in_words=words,ant_word_list=ant_word_list)
 
 if __name__ == '__main__':
