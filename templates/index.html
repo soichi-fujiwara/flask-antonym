@@ -1,24 +1,36 @@
 {% extends "layout.html" %}
 {% block content %}
-  <!-- Form
-  ================================================== -->
+
 <div class="form">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <p class="lead">
-          {% if name %}
-            こんにちは {{ name }} さん
-          {% else %}
-            {{ message }}
-          {% endif %}
-        </p>
+      <div class="col-lg-12">
+
+        <!-- Form -->
         <form action="/" method="post" class="form-inline">
-          <label for="name">名前</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-          <button type="submit" class="btn btn-default">送信する</button>
+          
+          <!-- Input -->
+          <input type="text" class="form-control" id="words" name="words" placeholder="単語や文章を入力して下さい">
+
+          <!-- Button -->
+          <div class="col-xs-6 col-xs-offset-3" style="transform: rotate(2deg);margin:15px 0 50px 0;">
+            <button type="button" class="btn btn-warning btn-lg">　　生成　　</button>
+          </div>
         </form>
-        {{ rev_word }}
+
+        <!-- Result-Header -->
+        <div class="bf_antonym" style="margin:0 0 40px 0;">
+          {% if in_words %}
+            <div class="col-xs-12">「{{ in_words }}」の対義語は...</div>
+          {% endif %}
+        </div>
+
+        <!-- Result-Antnym -->
+        <div class="antonym">
+          {% for ant_word in ant_word_list %}
+            <div class="col-xs-12 col-md-6 col-lg-4">{{ ant_word }}</div>
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>
