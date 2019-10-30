@@ -4,7 +4,7 @@ import numpy as np
 
 def get_ant_word(words):
 
-  csv_dir = '.csv/df_ant_words.csv'
+  csv_dir = 'csv/df_ant_words.csv'
   df_ant = pd.read_csv(csv_dir,names=['words','ant1','ant2','ant3','flg'])
 
   word_cng_list = []
