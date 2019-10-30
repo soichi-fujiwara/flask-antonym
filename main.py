@@ -18,7 +18,6 @@ def index():
     words = request.form['words'][0:10]
     #対義語取得
     ant_word_list = ant.get_ant_word(words)
-    
     return render_template('index.html',ant_word_list=ant_word_list)
   else:
     #初期表示
