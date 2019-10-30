@@ -13,16 +13,17 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
+  ant_word_list = []
+  words = request.form['words'][0:10]
+
   if request.method == 'POST':
 
-    words = request.form['words'][0:10]
     #対義語取得
     ant_word_list = ant.get_ant_word(words)
-    return render_template('index.html',ant_word_list=ant_word_list)
+    return render_template('index.html',in_words=words,ant_word_list=ant_word_list)
   else:
     #初期表示
-    ant_word_list = []
-    return render_template('index.html',ant_word_list=ant_word_list)
+    return render_template('index.html',in_words=words,ant_word_list=ant_word_list)
 
 if __name__ == '__main__':
     app.debug = True
