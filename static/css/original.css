@@ -1,0 +1,40 @@
+html{
+	height: 100%;
+}
+body{
+	margin: 0;
+}
+#main_title_min h1 span {
+	font-family: 'Kosugi Maru', sans-serif;
+	font-size:30px;
+	height: 280px;
+	/*position: absolute;*/
+	width: 10px;
+	/*left: 380px;*/
+	top: 80px;
+	transform-origin: bottom center;
+}
+.char1 { transform: rotate(-19deg); }
+.char2 { transform: rotate(-11deg); }
+.char3 { transform: rotate(-3deg); }
+.char4 { transform: rotate(5deg); }
+.char5 { transform: rotate(13deg); }
+
+#main_title_big{
+	margin:0 0 20px 0;
+	font-family: 'Kosugi Maru', sans-serif;
+	font-size:45px;
+	transform: rotate(-2deg);
+}
+
+.bf_antonym{
+	font-family: 'Kosugi Maru', sans-serif;
+	font-size:20px;
+}
+.antonym{
+	font-family: 'Kosugi Maru', sans-serif;
+	font-size:20px;
+}
+.antonym div{
+	margin:0 0 10px 0;
+}
