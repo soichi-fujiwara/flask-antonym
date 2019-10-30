@@ -1,63 +1,29 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, render_template, request, redirect, url_for
-import numpy as np
-import pickle
-from io import BytesIO
-from gensim.models import KeyedVectors
 
 #対義語生成
-import lib_wordRevChange as lw
+#import lib_wordRevChange as lw
+import lib_antnym as ant
 
 
 app = Flask(__name__)
 
-# Main
-def picked_up():
-    messages = [
-        "こんにちは、あなたの名前を入力してください",
-        "やあ！お名前は何ですか？",
-        "あなたの名前を教えてね"
-    ]
-    return np.random.choice(messages)
-
 # Routing
 @app.route('/', methods=['POST', 'GET'])
 def index():
-  title = "ようこそ！"
-  message = picked_up()
 
   if request.method == 'POST':
 
-    rev_word = ""
-    words = request.form['name']
-    name = request.form['name']
-
-    from google.cloud import storage as gcs
-    import pandas as pd
-
-    bucket_name = 'ml_bucket_01'
-    fname = 'wiki_tohoku_pkl_20000.sav'
-    project_name = 'My First Project'
-
-    client = gcs.Client()
-    bucket = client.get_bucket(bucket_name)
-    blob = bucket.get_blob(fname)
-    #このメソッドだとローカルにファイルを生成しない
-    model = pickle.loads(blob.download_as_string())
-
-    #MAIN
-    words = words[0:16]
-    gyaku = u"逆"
-    inherent_words = '[' + words + ']'
-
-    rev_list = lw.wordRevChange(words,gyaku,inherent_words,model)
-    rev_word = rev_list[1]
-
-    return render_template('index.html',message=message,name=name,title=title,rev_word=rev_word)
+    words = request.form['words'][0:10]
+    #対義語取得
+    ant_word_list = ant.get_ant_word(words)
+    
+    return render_template('index.html',ant_word_list=ant_word_list)
   else:
-    return render_template('index.html',
-                           message=message, title=title)
+    #初期表示
+    ant_word_list = []
+    return render_template('index.html',ant_word_list=ant_word_list)
 
 if __name__ == '__main__':
     app.debug = True
