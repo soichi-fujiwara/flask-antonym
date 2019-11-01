@@ -3,5 +3,5 @@ numpy
 pandas
 mecab-python3
 gunicorn
-dask
+dask[complete]
 toolz
