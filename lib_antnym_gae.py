@@ -1,14 +1,12 @@
 import MeCab
 import pandas as pd
 import numpy as np
+import dask.dataframe as dd
 
 def get_ant_word(words):
   
-  if 'df_ant' in globals():
-    pass
-  else:
-    csv_dir = 'csv/df_ant_words.csv'
-    df_ant = pd.read_csv(csv_dir,names=['words','ant1','ant2','ant3','flg'])
+  csv_dir = 'csv/df_ant_words.csv'
+  df_ant = dd.read_csv(csv_dir,header=0, names=('words','ant1','ant2','ant3','flg'))
 
   word_cng_list = []
   dfTolist = ""
@@ -25,25 +23,30 @@ def get_ant_word(words):
   #-------------------------------------------------
   # 形態素分析後に対義語化
   #-------------------------------------------------
-  tokenizer = MeCab.Tagger("-Ochasen")
-  node = tokenizer.parseToNode(words)
-
+  #tokenizer = MeCab.Tagger("-Ochasen")
+  #node = tokenizer.parseToNode(words)
+  tokenizer = MeCab.Tagger("")
+  node = tokenizer.parse(words).split("\n")
+  
   ant_word1 = ''
   ant_word2 = ''
   ant_word3 = ''
 
   rvs_wd = ''
 
-  while node:
+  #while node:
+  for nd in node:
     #分かち書きの単語を取得
-    cut_wd = node.surface
+    #cut_wd = node.surface
+    cut_wd = nd.split("\t")[0]
 
     #数字はそのまま
     if cut_wd.isnumeric():
       ant_word = ant_word + str(cut_wd) 
     else:      
       if cut_wd != np.nan and cut_wd != '':
-        if node.feature.split(",")[0] == u"名詞":
+        #if node.feature.split(",")[0] == u"名詞":
+        if "\t名詞" in nd:
           try:
             rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][1]
             if rvs_wd is not np.nan:
@@ -69,14 +72,14 @@ def get_ant_word(words):
             ant_word2 = ant_word2 + str(cut_wd)
             ant_word3 = ant_word3 + str(cut_wd)
 
-        elif (node.feature.split(",")[0] == u"動詞" or
-          node.feature.split(",")[0] == u"形容詞" or
-          node.feature.split(",")[0] == u"副詞" or
-          node.feature.split(",")[0] == u"感動詞"):
+        elif (u"\t動詞" in nd or
+          u"\t形容詞" in nd or
+          u"\t副詞" in nd or
+          u"\t感動詞" in nd):
 
           #分かち書きの単語を取得
-          cut_wd = node.feature.split(",")[6]
-
+          #cut_wd = node.feature.split(",")[6]
+          cut_wd = nd.split("\t")[0]
           try:
             rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][1]
             if rvs_wd is not np.nan:
@@ -108,7 +111,7 @@ def get_ant_word(words):
             ant_word2 = ant_word2 + str(cut_wd)
             ant_word3 = ant_word3 + str(cut_wd)
 
-    node = node.next
+    #node = node.next
 
   word_cng_list = word_cng_list + dfTolist
   word_cng_list.append(ant_word1)
