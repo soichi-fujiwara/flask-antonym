@@ -1,6 +1,6 @@
 runtime: python37
 instance_class: F1
-threadsafe: true
+#threadsafe: true                 #3.7では非対応
 automatic_scaling:
   min_idle_instances: automatic   # idle状態にあるインスタンスの最小値
   max_idle_instances: 1           # idle状態にあるインスタンスの最大値
