@@ -44,7 +44,7 @@ def get_ant_word(words):
     if cut_wd.isnumeric():
       ant_word = ant_word + str(cut_wd) 
     else:      
-      if cut_wd != np.nan and cut_wd != '':
+      if cut_wd != np.nan and cut_wd != '' and cut_wd != 'EOS':
         #if node.feature.split(",")[0] == u"名詞":
         if "\t名詞" in nd:
           try:
