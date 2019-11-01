@@ -6,7 +6,7 @@ import dask.dataframe as dd
 def get_ant_word(words):
   
   csv_dir = 'csv/df_ant_words.csv'
-  df_ant = dd.read_csv(csv_dir,header=0, names=('words','ant1','ant2','ant3','flg'))
+  df_ant = dd.read_csv(csv_dir,header=0, names=('words','ant1','ant2','ant3','flg')).compute()
 
   word_cng_list = []
   dfTolist = ""
