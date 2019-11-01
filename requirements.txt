@@ -3,3 +3,4 @@ numpy
 pandas
 mecab-python3
 gunicorn
+dask
