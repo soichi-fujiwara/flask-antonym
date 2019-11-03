@@ -5,6 +5,10 @@ body{
 	margin: 0;
 }
 
+input{
+	text-align:center;
+}
+
 #main_title_min{
 	text-align:center;
 	font-size:30px;
