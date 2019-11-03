@@ -4,6 +4,15 @@ html{
 body{
 	margin: 0;
 }
+
+container{
+	text-align:center;
+}
+
+#main_title_min{
+	margin:5% 0 0 0;	
+}
+
 #main_title_min h1 span {
 	font-family: 'Kosugi Maru', sans-serif;
 	font-size:30px;
