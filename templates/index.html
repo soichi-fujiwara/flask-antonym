@@ -3,32 +3,36 @@
 
 <div class="form">
   <div class="container">
-    <div class="row">
 
-      <!-- Title -->
+    <!-- Title -->
+    <div class="row">
       <div class="col-xs-12">
         <div id="main_title_min">ざんねんな</div>
       </div>
       <div class="col-xs-12">
         <div id="main_title_big">対義語辞典</div>
       </div>
+    </div>
 
-      <!-- Form -->
-        <form action="/" method="post" class="form-inline">
+    <!-- Form -->
+    <div class="row">
+      <form action="/" method="post" class="form-inline">
 
-          <!-- Input -->
-    			<div class="col-xs-10 col-xs-offset-1">
-            <input type="text" class="form-control" id="words" name="words" placeholder="単語や文章を入力して下さい" maxlength="10">
-          </div>
+        <!-- Input -->
+        <div class="col-xs-10 col-xs-offset-1">
+          <input type="text" class="form-control" id="words" name="words" placeholder="単語や文章を入力して下さい" maxlength="10">
+        </div>
 
-          <!-- Button -->
-          <div class="col-xs-12" style="margin:15px 0 50px 0;">
-            <button type="button" class="btn btn-warning btn-block">　　生成　　</button>
-          </div>
-        </form>
-      </div>
+        <!-- Button -->
+        <div class="col-xs-12" style="margin:15px 0 50px 0;">
+          <button type="button" class="btn btn-warning btn-block">　　生成　　</button>
+        </div>
 
-      <!-- Result-Header -->
+      </form>
+    </div>
+
+    <!-- Result-Header -->
+    <div class="row">
       <div class="col-xs-12">
         <div class="bf_antonym" style="margin:0 0 40px 0;">
           {% if in_words %}
@@ -36,14 +40,17 @@
           {% endif %}
         </div>
       </div>
+    </div>
 
-      <!-- Result-Antnym -->
+    <!-- Result-Antnym -->
+    <div class="row">
       <div class="antonym">
         {% for ant_word in ant_word_list %}
           <div class="col-xs-12 col-md-6 col-lg-4" style="text-align:center;">{{ ant_word }}</div>
         {% endfor %}
       </div>
     </div>
+
   </div>
 </div>
 {% endblock %}
