@@ -16,7 +16,7 @@ container{
 #main_title_min h1 span {
 	font-family: 'Kosugi Maru', sans-serif;
 	font-size:30px;
-	height: 280px;
+	/*height: 280px;*/
 	/*position: absolute;*/
 	width: 10px;
 	/*left: 380px;*/
@@ -33,7 +33,6 @@ container{
 	margin:0 0 20px 0;
 	font-family: 'Kosugi Maru', sans-serif;
 	font-size:45px;
-	transform: rotate(-2deg);
 }
 
 .bf_antonym{
