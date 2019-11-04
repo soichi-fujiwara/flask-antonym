@@ -42,7 +42,9 @@ def get_ant_word(words):
 
     #数字はそのまま
     if cut_wd.isnumeric():
-      ant_word = ant_word + str(cut_wd) 
+      ant_word1 = ant_word1 + str(cut_wd)
+      ant_word2 = ant_word2 + str(cut_wd)
+      ant_word3 = ant_word3 + str(cut_wd)
     else:      
       if cut_wd != np.nan and cut_wd != '' and cut_wd != 'EOS':
         #if node.feature.split(",")[0] == u"名詞":
