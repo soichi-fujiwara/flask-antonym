@@ -18,7 +18,7 @@ def index():
   if request.method == 'POST':
 
     #対義語取得
-    words = request.form['words'][0:10]
+    words = request.form['words'][0:12]
     ant_word_list = ant.get_ant_word(words)
     return render_template('index.html',in_words=words,ant_word_list=ant_word_list)
   else:
