@@ -1,6 +1,6 @@
 Flask
 numpy
-pandas
+pandas==0.24.1
 mecab-python3
 gunicorn
 dask[complete]
