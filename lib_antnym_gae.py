@@ -3,10 +3,10 @@ import pandas as pd
 import numpy as np
 import dask.dataframe as dd
 
-def get_ant_word(words):
+def get_ant_word(words,df_ant):
   
-  csv_dir = 'csv/df_ant_words.csv'
-  df_ant = dd.read_csv(csv_dir,header=0, names=('words','ant1','ant2','ant3','flg')).compute()
+  #csv_dir = 'csv/df_ant_words.csv'
+  #df_ant = dd.read_csv(csv_dir,header=0, names=('words','ant1','ant2','ant3','flg')).compute()
 
   word_cng_list = []
   dfTolist = ""
