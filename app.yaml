@@ -1,6 +1,6 @@
 runtime: python37
 service: default
-instance_class: F1
+instance_class: F2
 
 handlers:
 - url: /csv
@@ -11,8 +11,8 @@ handlers:
 
 #threadsafe: true                 #3.7では非対応
 automatic_scaling:
-  max_instances: 2
-  min_idle_instances: automatic   # idle状態にあるインスタンスの最小値
+  max_instances: 1
+  min_idle_instances: 0           # idle状態にあるインスタンスの最小値
   max_idle_instances: 1           # idle状態にあるインスタンスの最大値
-  min_pending_latency: 3000ms     # リクエストを処理するまでに許される待ち時間の最小
+  min_pending_latency: automatic  # リクエストを処理するまでに許される待ち時間の最小
   max_pending_latency: automatic
