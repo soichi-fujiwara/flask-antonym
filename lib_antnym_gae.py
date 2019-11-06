@@ -26,7 +26,7 @@ def get_ant_word(words):
 
   #dfTolist = dfTolist1 + dfTolist2 + dfTolist3
   word_cng_list = word_cng_list + dfTolist
-  yield list(set(dfTolist))
+  yield list(set(word_cng_list))
   
   #-------------------------------------------------
   # 形態素分析後に対義語化
