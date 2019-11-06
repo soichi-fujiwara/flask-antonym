@@ -124,12 +124,14 @@ def get_ant_word(words):
     #node = node.next
 
   #word_cng_list = word_cng_list + dfTolist
-  word_cng_list.append(ant_word1)
-  word_cng_list.append(ant_word2)
-  word_cng_list.append(ant_word3)
+  
+  word_cng_list2 = []
+  word_cng_list2.append(ant_word1)
+  word_cng_list2.append(ant_word2)
+  word_cng_list2.append(ant_word3)
 
   del df_ant
   
   #◆返却
   #return list(set(word_cng_list))
-  yield list(set(word_cng_list))
+  yield list(set(word_cng_list2))
