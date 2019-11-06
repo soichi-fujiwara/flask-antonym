@@ -25,6 +25,14 @@ def get_ant_word(words):
   dfTolist3 = df_ant[df_ant["words"] == words]["ant3"].values.tolist()
 
   dfTolist = dfTolist1 + dfTolist2 + dfTolist3
+  #返却値作成
+  word_cng_list = word_cng_list.append(dfTolist)
+  #◆返却
+  yield list(set(word_cng_list))
+  #変数クリア
+  del dfTolist1
+  del dfTolist2
+  del dfTolist3
   
   #-------------------------------------------------
   # 形態素分析後に対義語化
@@ -121,11 +129,11 @@ def get_ant_word(words):
 
     #node = node.next
 
-  word_cng_list = word_cng_list + dfTolist
   word_cng_list.append(ant_word1)
   word_cng_list.append(ant_word2)
   word_cng_list.append(ant_word3)
 
   del df_ant
   
-  return list(set(word_cng_list))
+  #◆返却
+  yield list(set(word_cng_list))
