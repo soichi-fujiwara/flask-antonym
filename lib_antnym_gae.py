@@ -24,7 +24,7 @@ def get_ant_word(words):
   dfTolist2 = df_ant[df_ant["words"] == words]["ant2"].values.tolist()
   dfTolist3 = df_ant[df_ant["words"] == words]["ant3"].values.tolist()
 
-  #dfTolist = dfTolist1 + dfTolist2 + dfTolist3
+  dfTolist = dfTolist1 + dfTolist2 + dfTolist3
   word_cng_list = word_cng_list + dfTolist
   yield list(set(word_cng_list))
   
