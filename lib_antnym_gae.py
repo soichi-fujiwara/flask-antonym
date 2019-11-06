@@ -26,7 +26,7 @@ def get_ant_word(words):
 
   dfTolist = dfTolist1 + dfTolist2 + dfTolist3
   word_cng_list = word_cng_list + dfTolist
-  yield list(set(word_cng_list))
+  #yield list(set(word_cng_list))
   
   #-------------------------------------------------
   # 形態素分析後に対義語化
@@ -42,10 +42,8 @@ def get_ant_word(words):
 
   rvs_wd = ''
 
-  #while node:
   for nd in node:
     #分かち書きの単語を取得
-    #cut_wd = node.surface
     cut_wd = nd.split("\t")[0]
 
     #数字はそのまま
@@ -55,7 +53,6 @@ def get_ant_word(words):
       ant_word3 = ant_word3 + str(cut_wd)
     else:      
       if cut_wd != np.nan and cut_wd != '' and cut_wd != 'EOS':
-        #if node.feature.split(",")[0] == u"名詞":
         if "\t名詞" in nd:
           try:
             rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][1]
@@ -88,7 +85,6 @@ def get_ant_word(words):
           u"\t感動詞" in nd):
 
           #分かち書きの単語を取得
-          #cut_wd = node.feature.split(",")[6]
           cut_wd = nd.split("\t")[0]
           try:
             rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][1]
@@ -121,17 +117,13 @@ def get_ant_word(words):
             ant_word2 = ant_word2 + str(cut_wd)
             ant_word3 = ant_word3 + str(cut_wd)
 
-    #node = node.next
-
-  #word_cng_list = word_cng_list + dfTolist
-  
-  word_cng_list2 = []
-  word_cng_list2.append(ant_word1)
-  word_cng_list2.append(ant_word2)
-  word_cng_list2.append(ant_word3)
+  word_cng_list = word_cng_list + dfTolist
+  word_cng_list.append(ant_word1)
+  word_cng_list.append(ant_word2)
+  word_cng_list.append(ant_word3)
 
   del df_ant
   
   #◆返却
-  #return list(set(word_cng_list))
-  yield list(set(word_cng_list2))
+  return list(set(word_cng_list))
+  #yield list(set(word_cng_list2))
