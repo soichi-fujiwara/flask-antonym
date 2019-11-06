@@ -122,7 +122,7 @@ def get_ant_word(words):
 
     #node = node.next
 
-  word_cng_list.append(dfTolist)
+  word_cng_list = word_cng_list + dfTolist
   word_cng_list.append(ant_word1)
   word_cng_list.append(ant_word2)
   word_cng_list.append(ant_word3)
