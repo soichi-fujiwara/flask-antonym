@@ -120,4 +120,6 @@ def get_ant_word(words):
   word_cng_list.append(ant_word2)
   word_cng_list.append(ant_word3)
 
+  del df_ant
+  
   return list(set(word_cng_list))
