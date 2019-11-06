@@ -132,4 +132,4 @@ def get_ant_word(words):
   
   #◆返却
   #return list(set(word_cng_list))
-  yeild list(set(word_cng_list))
+  yield list(set(word_cng_list))
