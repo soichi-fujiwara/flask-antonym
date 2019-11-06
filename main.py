@@ -2,6 +2,7 @@
 
 from flask import Flask, render_template, request, redirect, url_for
 import dask.dataframe as dd
+import gc
 
 #対義語生成
 #import lib_wordRevChange as lw
@@ -29,4 +30,6 @@ def index():
 
 if __name__ == '__main__':
     app.debug = True
+    #メモリ解放
+    gc.collect()
     app.run(host='0.0.0.0')
