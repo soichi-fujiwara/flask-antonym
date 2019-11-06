@@ -1,6 +1,6 @@
 runtime: python37
 service: default
-instance_class: F1
+instance_class: F2
 
 - url: /static
   static_dir: static
