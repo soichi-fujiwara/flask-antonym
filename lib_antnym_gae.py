@@ -26,7 +26,8 @@ def get_ant_word(words):
 
   dfTolist = dfTolist1 + dfTolist2 + dfTolist3
   #◆返却
-  yield list(set(dfTolist))
+  word_cng_list = word_cng_list + dfTolist
+  yield list(set(word_cng_list))
 
   #変数クリア
   del dfTolist1
