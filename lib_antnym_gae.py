@@ -25,10 +25,9 @@ def get_ant_word(words):
   dfTolist3 = df_ant[df_ant["words"] == words]["ant3"].values.tolist()
 
   dfTolist = dfTolist1 + dfTolist2 + dfTolist3
-  #返却値作成
-  word_cng_list = word_cng_list.append(dfTolist)
   #◆返却
-  yield list(set(word_cng_list))
+  yield list(set(dfTolist))
+
   #変数クリア
   del dfTolist1
   del dfTolist2
