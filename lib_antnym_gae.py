@@ -9,6 +9,7 @@ from firebase_admin import firestore
 def get_ant_word(words):
   
   # db(FireStore)への接続
+	firebase_admin.initialize_app()
   db = firestore.Client()
 
   word_cng_list = []
