@@ -1,5 +1,6 @@
 Flask
+pandas
 mecab-python3
-gunicorn
 firebase-admin
 google-cloud-firestore
+gunicorn
