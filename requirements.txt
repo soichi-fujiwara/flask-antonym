@@ -1,7 +1,5 @@
 Flask
-numpy
-pandas==0.24.1
 mecab-python3
 gunicorn
-dask[complete]
-toolz
+firebase-admin
+google-cloud-firestore
