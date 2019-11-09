@@ -1,32 +1,27 @@
 import MeCab
 import pandas as pd
 import numpy as np
-import dask.dataframe as dd
+
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 def get_ant_word(words):
   
-  csv_dir = 'csv/df_ant_words.csv'
-  #df_ant = dd.read_csv(csv_dir,header=0, names=('words','ant1','ant2','ant3','flg')).compute()
-  df_ant = None
-  for tmp in pd.read_csv(csv_dir,header=0, names=('words','ant1','ant2','ant3','flg'),chunksize=10000):
-    if df_ant is None:
-      df_ant = tmp
-    else:
-      df_ant = df_ant.append(tmp, ignore_index=True)
-  
+  # db(FireStore)への接続
+  db = firestore.Client()
+
   word_cng_list = []
-  dfTolist = ""
   
   #-------------------------------------------------
   # そのまま対義語化
   #-------------------------------------------------
-  dfTolist1 = df_ant[df_ant["words"] == words]["ant1"].values.tolist()
-  dfTolist2 = df_ant[df_ant["words"] == words]["ant2"].values.tolist()
-  dfTolist3 = df_ant[df_ant["words"] == words]["ant3"].values.tolist()
-
-  dfTolist = dfTolist1 + dfTolist2 + dfTolist3
-  word_cng_list = word_cng_list + dfTolist
-  #yield list(set(word_cng_list))
+  query = db.collection('nlp').where('words', '==', words)
+  docs = query.get()
+  for doc in docs:
+    word_cng_list.append(doc.to_dict()["ant1"])
+    word_cng_list.append(doc.to_dict()["ant2"])
+    word_cng_list.append(doc.to_dict()["ant3"])
   
   #-------------------------------------------------
   # 形態素分析後に対義語化
@@ -55,19 +50,28 @@ def get_ant_word(words):
       if cut_wd != np.nan and cut_wd != '' and cut_wd != 'EOS':
         if "\t名詞" in nd:
           try:
-            rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][1]
+            ant_wk_list = []
+            query = db.collection('nlp').where('words', '==', cut_wd)
+            docs = query.get()
+
+            for doc in docs:
+              ant_wk_list.append(doc.to_dict()["ant1"])
+              ant_wk_list.append(doc.to_dict()["ant2"])
+              ant_wk_list.append(doc.to_dict()["ant3"])
+
+            rvs_wd = ant_wk_list[0]
             if rvs_wd is not np.nan:
               ant_word1 = ant_word1 + str(rvs_wd)
             else:
               ant_word1 = ant_word1 + str(cut_wd)
 
-            rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][2]
+            rvs_wd = ant_wk_list[1]
             if rvs_wd is not np.nan:
               ant_word2 = ant_word2 + str(rvs_wd)
             else:
               ant_word2 = ant_word2 + str(cut_wd)
 
-            rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][3]
+            rvs_wd = ant_wk_list[2]
             if rvs_wd is not np.nan:
               ant_word3 = ant_word3 + str(rvs_wd)
             else:
@@ -87,19 +91,28 @@ def get_ant_word(words):
           #分かち書きの単語を取得
           cut_wd = nd.split("\t")[0]
           try:
-            rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][1]
+            ant_wk_list = []
+            query = db.collection('nlp').where('words', '==', cut_wd)
+            docs = query.get()
+
+            for doc in docs:
+              ant_wk_list.append(doc.to_dict()["ant1"])
+              ant_wk_list.append(doc.to_dict()["ant2"])
+              ant_wk_list.append(doc.to_dict()["ant3"])
+
+            rvs_wd = ant_wk_list[0]
             if rvs_wd is not np.nan:
               ant_word1 = ant_word1 + str(rvs_wd)
             else:
               ant_word1 = ant_word1 + str(cut_wd)
 
-            rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][2]
+            rvs_wd = ant_wk_list[1]
             if rvs_wd is not np.nan:
               ant_word2 = ant_word2 + str(rvs_wd)
             else:
               ant_word2 = ant_word2 + str(cut_wd)
 
-            rvs_wd = df_ant[df_ant["words"] == cut_wd].values[0][3]
+            rvs_wd = ant_wk_list[2]
             if rvs_wd is not np.nan:
               ant_word3 = ant_word3 + str(rvs_wd)
             else:
@@ -117,13 +130,9 @@ def get_ant_word(words):
             ant_word2 = ant_word2 + str(cut_wd)
             ant_word3 = ant_word3 + str(cut_wd)
 
-  word_cng_list = word_cng_list + dfTolist
   word_cng_list.append(ant_word1)
   word_cng_list.append(ant_word2)
   word_cng_list.append(ant_word3)
 
-  del df_ant
-  
   #◆返却
   return list(set(word_cng_list))
-  #yield list(set(word_cng_list2))
