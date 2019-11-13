@@ -141,7 +141,7 @@ def get_ant_word(words):
   #◆返却
   ret_list = list(set(word_cng_list))
   try:
-    ret_list = ret_list.remove(words)
+    ret_list.remove(words)
   except ValueError as error:
     pass
   
