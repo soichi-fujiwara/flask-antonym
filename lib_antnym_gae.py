@@ -139,4 +139,13 @@ def get_ant_word(words):
   word_cng_list.append(ant_word3)
 
   #◆返却
-  return list(set(word_cng_list))
+  ret_list = list(set(word_cng_list))
+  try:
+    ret_list = ret_list.remove(words)
+  except ValueError as error:
+    pass
+  
+  if len(ret_list) == 0:
+    ret_list = ['該当なし']
+
+  return ret_list
