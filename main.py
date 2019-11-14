@@ -24,14 +24,13 @@ def index():
                       '(例)好きなドラマ',
                       '(例)流行りの言葉',
                       '(例)好きな店の名前',
-                      '(例)気になる学校の名前',
                       '(例)キャラクターの名前',
                       '(例)好きな曲名',
                       '(例)好きなお菓子',
                       '(例)好きなフレーズ',
                       '(例)想い出の場所']
 
-    auto_comp = auto_comp_list[random.randint(0,12)]
+    auto_comp = auto_comp_list[random.randint(0,11)]
 
     #対義語取得
     words = request.form['words'][0:12]
