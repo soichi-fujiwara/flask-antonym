@@ -5,27 +5,40 @@ import numpy as np
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from google.appengine.api import memcache
+
+def get_cached_data(p_key):
+  data = memcache.get(p_key)
+  if data is not None:
+    return data
+  else:
+    return None
 
 def get_ant_word(words):
   
-  # db(FireStore)の初期化
-  if (not len(firebase_admin._apps)):
-    firebase_admin.initialize_app()
+  #memcache確認
+  cashed_dt = if get_cached_data(words):
+  if cashed_dt is not None:
+    return 
+  else:
+    # db(FireStore)の初期化
+    if (not len(firebase_admin._apps)):
+      firebase_admin.initialize_app()
 
-  # db(FireStore)への接続
-  db = firestore.Client()
+    # db(FireStore)への接続
+    db = firestore.Client()
 
-  word_cng_list = []
+    word_cng_list = []
 
-  #-------------------------------------------------
-  # そのまま対義語化
-  #-------------------------------------------------
-  query = db.collection('nlp').where('words', '==', words)
-  docs = query.get()
-  for doc in docs:
-    word_cng_list.append(doc.to_dict()["ant1"])
-    word_cng_list.append(doc.to_dict()["ant2"])
-    word_cng_list.append(doc.to_dict()["ant3"])
+    #-------------------------------------------------
+    # そのまま対義語化
+    #-------------------------------------------------
+    query = db.collection('nlp').where('words', '==', words)
+    docs = query.get()
+    for doc in docs:
+      word_cng_list.append(doc.to_dict()["ant1"])
+      word_cng_list.append(doc.to_dict()["ant2"])
+      word_cng_list.append(doc.to_dict()["ant3"])
   
   #-------------------------------------------------
   # 形態素分析後に対義語化
