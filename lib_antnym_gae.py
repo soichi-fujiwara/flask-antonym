@@ -16,9 +16,12 @@ def get_cached_data(p_key):
 
 def get_ant_word(words):
   
+  word_cng_list = []
+
   #memcache確認
-  if get_cached_data(words) is not None:
-    return 
+  ret_list = get_cached_data(words)
+  if ret_list is not None:
+    return ret_list
   else:
     # db(FireStore)の初期化
     if (not len(firebase_admin._apps)):
@@ -26,8 +29,6 @@ def get_ant_word(words):
 
     # db(FireStore)への接続
     db = firestore.Client()
-
-    word_cng_list = []
 
     #-------------------------------------------------
     # そのまま対義語化
