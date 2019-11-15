@@ -17,8 +17,7 @@ def get_cached_data(p_key):
 def get_ant_word(words):
   
   #memcache確認
-  cashed_dt = if get_cached_data(words):
-  if cashed_dt is not None:
+  if get_cached_data(words) is not None:
     return 
   else:
     # db(FireStore)の初期化
