@@ -3,4 +3,5 @@ pandas
 mecab-python3
 firebase-admin
 google-cloud-firestore
+google-appengine
 gunicorn
