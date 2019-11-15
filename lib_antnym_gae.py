@@ -20,25 +20,29 @@ def get_ant_word(words):
 
   #memcache確認
   ret_list = get_cached_data(words)
-  if ret_list is not None:
-    return ret_list
-  else:
+
+  #not cached
+  if ret_list is None:
     # db(FireStore)の初期化
     if (not len(firebase_admin._apps)):
       firebase_admin.initialize_app()
 
     # db(FireStore)への接続
     db = firestore.Client()
-
-    #-------------------------------------------------
-    # そのまま対義語化
-    #-------------------------------------------------
-    query = db.collection('nlp').where('words', '==', words)
-    docs = query.get()
-    for doc in docs:
-      word_cng_list.append(doc.to_dict()["ant1"])
-      word_cng_list.append(doc.to_dict()["ant2"])
-      word_cng_list.append(doc.to_dict()["ant3"])
+  #cached
+  else:
+    #return cache
+    return ret_list
+  
+  #-------------------------------------------------
+  # そのまま対義語化
+  #-------------------------------------------------
+  query = db.collection('nlp').where('words', '==', words)
+  docs = query.get()
+  for doc in docs:
+    word_cng_list.append(doc.to_dict()["ant1"])
+    word_cng_list.append(doc.to_dict()["ant2"])
+    word_cng_list.append(doc.to_dict()["ant3"])
   
   #-------------------------------------------------
   # 形態素分析後に対義語化
@@ -68,6 +72,7 @@ def get_ant_word(words):
         if "\t名詞" in nd:
           try:
             ant_wk_list = []
+
             query = db.collection('nlp').where('words', '==', cut_wd)
             docs = query.get()
 
@@ -109,6 +114,7 @@ def get_ant_word(words):
           cut_wd = nd.split("\t")[0]
           try:
             ant_wk_list = []
+            
             query = db.collection('nlp').where('words', '==', cut_wd)
             docs = query.get()
 
@@ -160,5 +166,8 @@ def get_ant_word(words):
   
   if len(ret_list) == 0:
     ret_list = ['該当なし']
-
+  else:
+    #write cache(10days)
+    memcache.add(words, ret_list, 864000)
+    
   return ret_list
