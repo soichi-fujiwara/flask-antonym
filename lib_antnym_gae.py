@@ -5,34 +5,18 @@ import numpy as np
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-from google.appengine.api import memcache
 
-def get_cached_data(p_key):
-  data = memcache.get(p_key)
-  if data is not None:
-    return data
-  else:
-    return None
 
 def get_ant_word(words):
   
   word_cng_list = []
 
-  #memcache確認
-  ret_list = get_cached_data(words)
+  # db(FireStore)の初期化
+  if (not len(firebase_admin._apps)):
+    firebase_admin.initialize_app()
 
-  #not cached
-  if ret_list is None:
-    # db(FireStore)の初期化
-    if (not len(firebase_admin._apps)):
-      firebase_admin.initialize_app()
-
-    # db(FireStore)への接続
-    db = firestore.Client()
-  #cached
-  else:
-    #return cache
-    return ret_list
+  # db(FireStore)への接続
+  db = firestore.Client()
   
   #-------------------------------------------------
   # そのまま対義語化
@@ -166,8 +150,5 @@ def get_ant_word(words):
   
   if len(ret_list) == 0:
     ret_list = ['該当なし']
-  else:
-    #write cache(10days)
-    memcache.add(words, ret_list, 864000)
     
   return ret_list
