@@ -14,21 +14,10 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
+  auto_comp = "単語や文章を入力して下さい"
+
   ant_word_list = []
   if request.method == 'POST':
-
-    #参考値作成
-    auto_comp_list = ['(例)好きなジブリ映画',
-                      '(例)好きな小説',
-                      '(例)好きなドラマ',
-                      '(例)流行りの言葉',
-                      '(例)好きな曲名',
-                      '(例)好きなフレーズ',
-                      '今、何が見える？',
-                      '今、何をしている？',
-                      '(例)想い出の場所']
-
-    auto_comp = auto_comp_list[random.randint(0,len(auto_comp_list)-1)]
 
     #対義語取得
     words = request.form['words'][0:12].replace(' ','').replace('　','')
@@ -37,7 +26,6 @@ def index():
   else:
     #初期表示
     words = ""
-    auto_comp = "単語や文章を入力して下さい"
     return render_template('index.html',auto_comp=auto_comp,in_words=words,ant_word_list=ant_word_list)
 
 if __name__ == '__main__':
