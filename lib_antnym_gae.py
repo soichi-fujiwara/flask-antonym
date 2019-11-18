@@ -173,7 +173,7 @@ def get_ant_word(words):
     #Cache Write
     try:
       for index in range(len(ret_list)):
-        r.rpush(words,str(index))
+        r.rpush(words,str(ret_list[index]))
     except:
       pass
     
