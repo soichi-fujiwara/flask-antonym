@@ -31,7 +31,7 @@ def index():
     auto_comp = auto_comp_list[random.randint(0,len(auto_comp_list)-1)]
 
     #対義語取得
-    words = request.form['words'][0:12]
+    words = request.form['words'][0:12].replace(' ','').replace('　','')
     ant_word_list = ant.get_ant_word(words)
     return render_template('index.html',auto_comp=auto_comp,in_words=words,ant_word_list=ant_word_list)
   else:
