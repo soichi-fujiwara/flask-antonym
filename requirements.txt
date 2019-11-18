@@ -4,3 +4,4 @@ mecab-python3
 firebase-admin
 google-cloud-firestore
 gunicorn
+redis
