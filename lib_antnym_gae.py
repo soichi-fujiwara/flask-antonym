@@ -5,17 +5,36 @@ import numpy as np
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import redis
 
+def decode_utf8(p):
+  return p.decode('utf-8')
 
 def get_ant_word(words):
   
-  word_cng_list = []
+  #◆1◆ Cache有の場合はRedisよりデータ取得
+  host_name = 'redis-12496.c1.asia-northeast1-1.gce.cloud.redislabs.com'
+  port_no = xxxxx
+  pass_cd = 'yyyyy'
 
-  # db(FireStore)の初期化
+  try:
+    pool = redis.ConnectionPool(host=host_name, port=port_no, password=pass_cd, db=0)
+    r = redis.StrictRedis(connection_pool=pool,charset='utf-8', decode_responses=True)
+    #Cache data 
+    get_data = r.lrange(words, 0, -1)
+    rt_list = list(map(decode_utf8, get_data))
+    if rt_list != []:
+      return rt_list
+  except:
+    pass
+
+  #◆2◆ Cache無の場合はdb(Firestore)よりデータ取得
+  word_cng_list = []
+  # dbの初期化
   if (not len(firebase_admin._apps)):
     firebase_admin.initialize_app()
 
-  # db(FireStore)への接続
+  # dbへの接続
   db = firestore.Client()
   
   #-------------------------------------------------
@@ -150,5 +169,9 @@ def get_ant_word(words):
   
   if len(ret_list) == 0:
     ret_list = ['該当なし']
-    
+  else:
+    #Cache Write
+    for index in range(len(ret_list)):
+      r.rpush(words,str(index))
+
   return ret_list
