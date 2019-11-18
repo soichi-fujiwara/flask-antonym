@@ -171,7 +171,10 @@ def get_ant_word(words):
     ret_list = ['該当なし']
   else:
     #Cache Write
-    for index in range(len(ret_list)):
-      r.rpush(words,str(index))
-
+    try:
+      for index in range(len(ret_list)):
+        r.rpush(words,str(index))
+    except:
+      pass
+    
   return ret_list
