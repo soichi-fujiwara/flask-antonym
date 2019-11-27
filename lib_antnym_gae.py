@@ -7,7 +7,6 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import redis
 
-
 #-----------------------------------------------------------------------------------------
 # decode_utf8
 #-----------------------------------------------------------------------------------------
