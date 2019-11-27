@@ -7,12 +7,62 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import redis
 
+
+#-----------------------------------------------------------------------------------------
+# decode_utf8
+#-----------------------------------------------------------------------------------------
 def decode_utf8(p):
   return p.decode('utf-8')
 
+#-----------------------------------------------------------------------------------------
+# create_antonym_strings
+#-----------------------------------------------------------------------------------------
+def create_antonym_strings(cut_wd,ant_word1,ant_word2,ant_word3):
+
+  try:
+    rvs_wd = ant_wk_list[0]
+    if rvs_wd is not np.nan:
+      ant_word1 = ant_word1 + str(rvs_wd)
+    else:
+      ant_word1 = ant_word1 + str(cut_wd)
+  except:
+    ant_word1 = ant_word1 + str(cut_wd)
+
+  try:
+    rvs_wd = ant_wk_list[1]
+    if rvs_wd is not np.nan:
+      ant_word2 = ant_word2 + str(rvs_wd)
+    else:
+      ant_word2 = ant_word2 + str(cut_wd)
+  except:
+    ant_word2 = ant_word2 + str(cut_wd)
+
+  try:
+    rvs_wd = ant_wk_list[2]
+    if rvs_wd is not np.nan:
+      ant_word3 = ant_word3 + str(rvs_wd)
+    else:
+      ant_word3 = ant_word3 + str(cut_wd)
+  except:
+    ant_word3 = ant_word3 + str(cut_wd)
+
+  rt_ant_list = []
+  rt_ant_list.append(ant_word1)
+  rt_ant_list.append(ant_word2)
+  rt_ant_list.append(ant_word3)
+
+  return rt_ant_list
+
+#-----------------------------------------------------------------------------------------
+# main
+#-----------------------------------------------------------------------------------------
 def get_ant_word(words):
   
-  #◆1◆ Cache有の場合はRedisよりデータ取得
+  word_cng_list = []
+
+  #-----------------------------------------------------------------------------------------
+  # Redis Connect
+  #-----------------------------------------------------------------------------------------
   host_name = 'redis-12496.c1.asia-northeast1-1.gce.cloud.redislabs.com'
   port_no = xxxxx
   pass_cd = 'yyyyy'
@@ -20,16 +70,12 @@ def get_ant_word(words):
   try:
     pool = redis.ConnectionPool(host=host_name, port=port_no, password=pass_cd, db=0)
     r = redis.StrictRedis(connection_pool=pool,charset='utf-8', decode_responses=True)
-    #Cache data 
-    get_data = r.lrange(words, 0, -1)
-    rt_list = list(map(decode_utf8, get_data))
-    if rt_list != []:
-      return rt_list
   except:
     pass
 
-  #◆2◆ Cache無の場合はdb(Firestore)よりデータ取得
-  word_cng_list = []
+  #-----------------------------------------------------------------------------------------
+  # Firestore Connect
+  #-----------------------------------------------------------------------------------------
   # dbの初期化
   if (not len(firebase_admin._apps)):
     firebase_admin.initialize_app()
@@ -38,20 +84,8 @@ def get_ant_word(words):
   db = firestore.Client()
   
   #-------------------------------------------------
-  # そのまま対義語化
+  # ◆1. 形態素分析後に対義語化
   #-------------------------------------------------
-  query = db.collection('nlp').where('words', '==', words)
-  docs = query.get()
-  for doc in docs:
-    word_cng_list.append(doc.to_dict()["ant1"])
-    word_cng_list.append(doc.to_dict()["ant2"])
-    word_cng_list.append(doc.to_dict()["ant3"])
-  
-  #-------------------------------------------------
-  # 形態素分析後に対義語化
-  #-------------------------------------------------
-  #tokenizer = MeCab.Tagger("-Ochasen")
-  #node = tokenizer.parseToNode(words)
   tokenizer = MeCab.Tagger("")
   node = tokenizer.parse(words).split("\n")
   
@@ -76,34 +110,47 @@ def get_ant_word(words):
           try:
             ant_wk_list = []
 
-            query = db.collection('nlp').where('words', '==', cut_wd)
-            docs = query.get()
+            #------------------------------------------------------------------
+            # ◆Get Cache Data
+            #------------------------------------------------------------------
+            get_data = r.lrange(cut_wd, 0, -1)
+            rt_list = list(map(decode_utf8, get_data))
 
-            for doc in docs:
-              ant_wk_list.append(doc.to_dict()["ant1"])
-              ant_wk_list.append(doc.to_dict()["ant2"])
-              ant_wk_list.append(doc.to_dict()["ant3"])
+            if rt_list == []:
+              #------------------------------------------------------------------
+              # Get Firestore DB
+              #------------------------------------------------------------------
+              query = db.collection('nlp').where('words', '==', cut_wd)
+              docs = query.get()
 
-            rvs_wd = ant_wk_list[0]
-            if rvs_wd is not np.nan:
-              ant_word1 = ant_word1 + str(rvs_wd)
+              for doc in docs:
+                ant_wk_list.append(doc.to_dict()["ant1"])
+                ant_wk_list.append(doc.to_dict()["ant2"])
+                ant_wk_list.append(doc.to_dict()["ant3"])
+
+              #------------------------------------------------------------------
+              # ◆Write Redis Cache
+              #------------------------------------------------------------------
+              try:
+                for index in range(len(ret_list)):
+                  r.rpush(cut_wd,str(ret_list[index]))
+              except:
+                pass
+
             else:
-              ant_word1 = ant_word1 + str(cut_wd)
+              #------------------------------------------------------------------
+              # Set Cache Data
+              #------------------------------------------------------------------
+              for lst in rt_list:
+                ant_wk_list.append(lst)
 
-            rvs_wd = ant_wk_list[1]
-            if rvs_wd is not np.nan:
-              ant_word2 = ant_word2 + str(rvs_wd)
-            else:
-              ant_word2 = ant_word2 + str(cut_wd)
+            #-------------------------------------------------------------------
+            # create antonym strings
+            #-------------------------------------------------------------------
+            create_antonym_strings(cut_wd,ant_word1,ant_word2,ant_word3)
 
-            rvs_wd = ant_wk_list[2]
-            if rvs_wd is not np.nan:
-              ant_word3 = ant_word3 + str(rvs_wd)
-            else:
-              ant_word3 = ant_word3 + str(cut_wd)
-
-          except IndexError as error:
-            #辞書に登録の無い単語の場合
+          # DB Error ?
+          except:
             ant_word1 = ant_word1 + str(cut_wd)
             ant_word2 = ant_word2 + str(cut_wd)
             ant_word3 = ant_word3 + str(cut_wd)
@@ -118,47 +165,95 @@ def get_ant_word(words):
           try:
             ant_wk_list = []
             
-            query = db.collection('nlp').where('words', '==', cut_wd)
-            docs = query.get()
+            #------------------------------------------------------------------
+            # ◆Get Cache Data
+            #------------------------------------------------------------------
+            get_data = r.lrange(cut_wd, 0, -1)
+            rt_list = list(map(decode_utf8, get_data))
 
-            for doc in docs:
-              ant_wk_list.append(doc.to_dict()["ant1"])
-              ant_wk_list.append(doc.to_dict()["ant2"])
-              ant_wk_list.append(doc.to_dict()["ant3"])
+            if rt_list == []:
+              #------------------------------------------------------------------
+              # Get Firestore DB
+              #------------------------------------------------------------------
+              query = db.collection('nlp').where('words', '==', cut_wd)
+              docs = query.get()
 
-            rvs_wd = ant_wk_list[0]
-            if rvs_wd is not np.nan:
-              ant_word1 = ant_word1 + str(rvs_wd)
+              for doc in docs:
+                ant_wk_list.append(doc.to_dict()["ant1"])
+                ant_wk_list.append(doc.to_dict()["ant2"])
+                ant_wk_list.append(doc.to_dict()["ant3"])
+
+              #------------------------------------------------------------------
+              # ◆Write Cache Data
+              #------------------------------------------------------------------
+              try:
+                for index in range(len(ret_list)):
+                  r.rpush(cut_wd,str(ret_list[index]))
+              except:
+                pass
+
             else:
-              ant_word1 = ant_word1 + str(cut_wd)
+              #------------------------------------------------------------------
+              # Set Redis Cache
+              #------------------------------------------------------------------
+              for lst in rt_list:
+                ant_wk_list.append(lst)
 
-            rvs_wd = ant_wk_list[1]
-            if rvs_wd is not np.nan:
-              ant_word2 = ant_word2 + str(rvs_wd)
-            else:
-              ant_word2 = ant_word2 + str(cut_wd)
+            #-------------------------------------------------------------------
+            # create antonym strings
+            #-------------------------------------------------------------------
+            create_antonym_strings(cut_wd,ant_word1,ant_word2,ant_word3)
 
-            rvs_wd = ant_wk_list[2]
-            if rvs_wd is not np.nan:
-              ant_word3 = ant_word3 + str(rvs_wd)
-            else:
-              ant_word3 = ant_word3 + str(cut_wd)
-
-          except IndexError as error:
-            #辞書に登録の無い単語の場合
+          # DB Error ?
+          except:
             ant_word1 = ant_word1 + str(cut_wd)
             ant_word2 = ant_word2 + str(cut_wd)
             ant_word3 = ant_word3 + str(cut_wd)
 
         else:
-          #◆結合
+          #特定の動名詞etc 以外
             ant_word1 = ant_word1 + str(cut_wd)
             ant_word2 = ant_word2 + str(cut_wd)
             ant_word3 = ant_word3 + str(cut_wd)
 
-  word_cng_list.append(ant_word1)
-  word_cng_list.append(ant_word2)
-  word_cng_list.append(ant_word3)
+  #-------------------------------------------------
+  # ◆2. そのまま対義語化
+  #-------------------------------------------------
+  # Get Cache Data
+  #------------------------------------------------------------------
+  try:
+    get_data = r.lrange(words, 0, -1)
+    rt_list = list(map(decode_utf8, get_data))
+
+    if rt_list == []:
+      #------------------------------------------------------------------
+      # Get Firestore DB
+      #------------------------------------------------------------------
+      query = db.collection('nlp').where('words', '==', words)
+      docs = query.get()
+
+      for doc in docs:
+        word_cng_list.append(doc.to_dict()["ant1"])
+        word_cng_list.append(doc.to_dict()["ant2"])
+        word_cng_list.append(doc.to_dict()["ant3"])
+
+      #------------------------------------------------------------------
+      # Write Redis Cache
+      #------------------------------------------------------------------
+      try:
+        for index in range(len(ret_list)):
+          r.rpush(words,str(ret_list[index]))
+      except:
+        pass
+
+    else:
+      #------------------------------------------------------------------
+      # Get Redis Cache
+      #------------------------------------------------------------------
+      for lst in rt_list:
+        word_cng_list.append(lst)
+  except:
+    pass
 
   #◆返却
   ret_list = list(set(word_cng_list))
@@ -169,12 +264,10 @@ def get_ant_word(words):
   
   if len(ret_list) == 0:
     ret_list = ['該当なし']
-  else:
-    #Cache Write
-    try:
-      for index in range(len(ret_list)):
-        r.rpush(words,str(ret_list[index]))
-    except:
-      pass
-    
+
+  ant_word1 = ''
+  ant_word2 = ''
+  ant_word3 = ''
+  get_data = ''
+
   return ret_list
