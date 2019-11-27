@@ -109,6 +109,7 @@ def get_ant_word(words):
         if "\t名詞" in nd:
           try:
             ant_wk_list = []
+            cache_write_list = []
 
             #------------------------------------------------------------------
             # ◆Get Cache Data
@@ -124,16 +125,22 @@ def get_ant_word(words):
               docs = query.get()
 
               for doc in docs:
-                ant_wk_list.append(doc.to_dict()["ant1"])
-                ant_wk_list.append(doc.to_dict()["ant2"])
-                ant_wk_list.append(doc.to_dict()["ant3"])
+                wk = doc.to_dict()["ant1"]
+                ant_wk_list.append(wk)
+                cache_write_list.append(wk)
+                wk = doc.to_dict()["ant2"]
+                ant_wk_list.append(wk)
+                cache_write_list.append(wk)
+                wk = doc.to_dict()["ant3"]
+                ant_wk_list.append(wk)
+                cache_write_list.append(wk)
 
               #------------------------------------------------------------------
               # ◆Write Redis Cache
               #------------------------------------------------------------------
               try:
-                for index in range(len(ret_list)):
-                  r.rpush(cut_wd,str(ret_list[index]))
+                for index in range(len(cache_write_list)):
+                  r.rpush(cut_wd,str(cache_write_list[index]))
               except:
                 pass
 
@@ -164,6 +171,7 @@ def get_ant_word(words):
           cut_wd = nd.split("\t")[0]
           try:
             ant_wk_list = []
+            cache_write_list = []
             
             #------------------------------------------------------------------
             # ◆Get Cache Data
@@ -179,16 +187,22 @@ def get_ant_word(words):
               docs = query.get()
 
               for doc in docs:
-                ant_wk_list.append(doc.to_dict()["ant1"])
-                ant_wk_list.append(doc.to_dict()["ant2"])
-                ant_wk_list.append(doc.to_dict()["ant3"])
+                wk = doc.to_dict()["ant1"]
+                ant_wk_list.append(wk)
+                cache_write_list.append(wk)
+                wk = doc.to_dict()["ant2"]
+                ant_wk_list.append(wk)
+                cache_write_list.append(wk)
+                wk = doc.to_dict()["ant3"]
+                ant_wk_list.append(wk)
+                cache_write_list.append(wk)
 
               #------------------------------------------------------------------
               # ◆Write Cache Data
               #------------------------------------------------------------------
               try:
-                for index in range(len(ret_list)):
-                  r.rpush(cut_wd,str(ret_list[index]))
+                for index in range(len(cache_write_list)):
+                  r.rpush(cut_wd,str(cache_write_list[index]))
               except:
                 pass
 
