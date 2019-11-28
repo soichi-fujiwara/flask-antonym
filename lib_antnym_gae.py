@@ -21,8 +21,8 @@ def create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3):
   # Delete from Instr = Antonym 
   ok_list = []
   for lst in ant_wk_list:
-    if cut_wd != lst
-    ok_list.append()
+    if cut_wd != lst:
+      ok_list.append(lst)
     
   try:
     rvs_wd = ok_list[0]
