@@ -16,7 +16,7 @@ def decode_utf8(p):
 #-----------------------------------------------------------------------------------------
 # create_antonym_strings
 #-----------------------------------------------------------------------------------------
-def create_antonym_strings(cut_wd,ant_word1,ant_word2,ant_word3):
+def create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3):
 
   try:
     rvs_wd = ant_wk_list[0]
@@ -153,8 +153,11 @@ def get_ant_word(words):
             #-------------------------------------------------------------------
             # create antonym strings
             #-------------------------------------------------------------------
-            create_antonym_strings(cut_wd,ant_word1,ant_word2,ant_word3)
-
+            rt_list = create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3)
+            ant_word1 = rt_list[0]
+            ant_word2 = rt_list[1]
+            ant_word3 = rt_list[2]
+            
           # DB Error ?
           except:
             ant_word1 = ant_word1 + str(cut_wd)
@@ -215,7 +218,10 @@ def get_ant_word(words):
             #-------------------------------------------------------------------
             # create antonym strings
             #-------------------------------------------------------------------
-            create_antonym_strings(cut_wd,ant_word1,ant_word2,ant_word3)
+            rt_list = create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3)
+            ant_word1 = rt_list[0]
+            ant_word2 = rt_list[1]
+            ant_word3 = rt_list[2]
 
           # DB Error ?
           except:
