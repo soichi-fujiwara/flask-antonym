@@ -232,10 +232,14 @@ def get_ant_word(words):
 
         else:
           #特定の動名詞etc 以外
-            ant_word1 = ant_word1 + str(cut_wd)
-            ant_word2 = ant_word2 + str(cut_wd)
-            ant_word3 = ant_word3 + str(cut_wd)
-
+          ant_word1 = ant_word1 + str(cut_wd)
+          ant_word2 = ant_word2 + str(cut_wd)
+          ant_word3 = ant_word3 + str(cut_wd)
+          
+  #Return Data
+  word_cng_list.append(ant_word1)
+  word_cng_list.append(ant_word2)
+  word_cng_list.append(ant_word3)
   #-------------------------------------------------
   # ◆2. そのまま対義語化
   #-------------------------------------------------
@@ -283,7 +287,7 @@ def get_ant_word(words):
   except:
     pass
 
-  #◆返却
+  #Return Data
   ret_list = list(set(word_cng_list))
   try:
     ret_list.remove(words)
