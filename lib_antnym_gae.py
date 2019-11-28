@@ -133,13 +133,13 @@ def get_ant_word(words):
 
               for doc in docs:
                 wk = doc.to_dict()["ant1"]
-                ant_wk_list.append(wk)
+                ant_wk_list.append(decode_utf8(wk))
                 cache_write_list.append(wk)
                 wk = doc.to_dict()["ant2"]
-                ant_wk_list.append(wk)
+                ant_wk_list.append(decode_utf8(wk))
                 cache_write_list.append(wk)
                 wk = doc.to_dict()["ant3"]
-                ant_wk_list.append(wk)
+                ant_wk_list.append(decode_utf8(wk))
                 cache_write_list.append(wk)
 
               #------------------------------------------------------------------
