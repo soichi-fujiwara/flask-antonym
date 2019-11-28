@@ -16,40 +16,40 @@ def decode_utf8(p):
 #-----------------------------------------------------------------------------------------
 # create_antonym_strings
 #-----------------------------------------------------------------------------------------
-def create_antonym_strings(cut_wd,p_ant_wk_list,ant_word1,ant_word2,ant_word3):
+def create_antonym_strings(p_cut_wd,p_ant_wk_list,p_ant_word1,p_ant_word2,p_ant_word3):
 
   # Delete from Instr = Antonym
   try:
     rvs_wd = p_ant_wk_list[0]
     if rvs_wd is not np.nan:
-      ant_word1 = ant_word1 + str(rvs_wd)
+      p_ant_word1 = p_ant_word1 + str(rvs_wd)
     else:
-      ant_word1 = ant_word1 + str(cut_wd)
+      p_ant_word1 = p_ant_word1 + str(p_cut_wd)
   except:
-    ant_word1 = ant_word1 + str(cut_wd)
+    p_ant_word1 = p_ant_word1 + str(p_cut_wd)
 
   try:
     rvs_wd = p_ant_wk_list[1]
     if rvs_wd is not np.nan:
-      ant_word2 = ant_word2 + str(rvs_wd)
+      p_ant_word2 = p_ant_word2 + str(rvs_wd)
     else:
-      ant_word2 = ant_word2 + str(cut_wd)
+      p_ant_word2 = p_ant_word2 + str(p_cut_wd)
   except:
-    ant_word2 = ant_word2 + str(cut_wd)
+    p_ant_word2 = p_ant_word2 + str(p_cut_wd)
 
   try:
     rvs_wd = p_ant_wk_list[2]
     if rvs_wd is not np.nan:
-      ant_word3 = ant_word3 + str(rvs_wd)
+      p_ant_word3 = p_ant_word3 + str(rvs_wd)
     else:
-      ant_word3 = ant_word3 + str(cut_wd)
+      p_ant_word3 = p_ant_word3 + str(p_cut_wd)
   except:
-    ant_word3 = ant_word3 + str(cut_wd)
+    ant_word3 = ant_word3 + str(p_cut_wd)
 
   rt_ant_list = []
-  rt_ant_list.append(ant_word1)
-  rt_ant_list.append(ant_word2)
-  rt_ant_list.append(ant_word3)
+  rt_ant_list.append(p_ant_word1)
+  rt_ant_list.append(p_ant_word2)
+  rt_ant_list.append(p_ant_word3)
 
   return rt_ant_list
 
