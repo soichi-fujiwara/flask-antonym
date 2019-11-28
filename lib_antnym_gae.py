@@ -22,29 +22,29 @@ def create_antonym_strings(p_cut_wd,p_ant_wk_list,p_ant_word1,p_ant_word2,p_ant_
   try:
     rvs_wd = p_ant_wk_list[0]
     if rvs_wd is not np.nan:
-      p_ant_word1 = p_ant_word1 + str(rvs_wd)
+      p_ant_word1 = p_ant_word1 + str(rvs_wd) + "a1"
     else:
-      p_ant_word1 = p_ant_word1 + str(p_cut_wd)
+      p_ant_word1 = p_ant_word1 + str(p_cut_wd) + "a2"
   except:
-    p_ant_word1 = p_ant_word1 + str(p_cut_wd)
+    p_ant_word1 = p_ant_word1 + str(p_cut_wd) + "a3"
 
   try:
     rvs_wd = p_ant_wk_list[1]
     if rvs_wd is not np.nan:
-      p_ant_word2 = p_ant_word2 + str(rvs_wd)
+      p_ant_word2 = p_ant_word2 + str(rvs_wd) + "b1"
     else:
-      p_ant_word2 = p_ant_word2 + str(p_cut_wd)
+      p_ant_word2 = p_ant_word2 + str(p_cut_wd) + "b2"
   except:
-    p_ant_word2 = p_ant_word2 + str(p_cut_wd)
+    p_ant_word2 = p_ant_word2 + str(p_cut_wd) + "b3"
 
   try:
     rvs_wd = p_ant_wk_list[2]
     if rvs_wd is not np.nan:
-      p_ant_word3 = p_ant_word3 + str(rvs_wd)
+      p_ant_word3 = p_ant_word3 + str(rvs_wd) + "c1"
     else:
-      p_ant_word3 = p_ant_word3 + str(p_cut_wd)
+      p_ant_word3 = p_ant_word3 + str(p_cut_wd) + "c2"
   except:
-    ant_word3 = ant_word3 + str(p_cut_wd)
+    ant_word3 = ant_word3 + str(p_cut_wd) + "c3"
 
   rslt_list = []
   rslt_list.append(p_ant_word1)
