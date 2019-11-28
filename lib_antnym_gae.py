@@ -22,29 +22,29 @@ def create_antonym_strings(p_cut_wd,p_ant_wk_list,p_ant_word1,p_ant_word2,p_ant_
   try:
     rvs_wd = p_ant_wk_list[0]
     if rvs_wd is not np.nan:
-      p_ant_word1 = p_ant_word1 + str(rvs_wd) + "a1"
+      p_ant_word1 = p_ant_word1 + str(rvs_wd)
     else:
-      p_ant_word1 = p_ant_word1 + str(p_cut_wd) + "a2"
+      p_ant_word1 = p_ant_word1 + str(p_cut_wd)
   except:
-    p_ant_word1 = p_ant_word1 + str(p_cut_wd) + "a3"
+    p_ant_word1 = p_ant_word1 + str(p_cut_wd)
 
   try:
     rvs_wd = p_ant_wk_list[1]
     if rvs_wd is not np.nan:
-      p_ant_word2 = p_ant_word2 + str(rvs_wd) + "b1"
+      p_ant_word2 = p_ant_word2 + str(rvs_wd)
     else:
-      p_ant_word2 = p_ant_word2 + str(p_cut_wd) + "b2"
+      p_ant_word2 = p_ant_word2 + str(p_cut_wd)
   except:
-    p_ant_word2 = p_ant_word2 + str(p_cut_wd) + "b3"
+    p_ant_word2 = p_ant_word2 + str(p_cut_wd)
 
   try:
     rvs_wd = p_ant_wk_list[2]
     if rvs_wd is not np.nan:
-      p_ant_word3 = p_ant_word3 + str(rvs_wd) + "c1"
+      p_ant_word3 = p_ant_word3 + str(rvs_wd)
     else:
-      p_ant_word3 = p_ant_word3 + str(p_cut_wd) + "c2"
+      p_ant_word3 = p_ant_word3 + str(p_cut_wd)
   except:
-    p_ant_word3 = p_ant_word3 + str(p_cut_wd) + "c3"
+    p_ant_word3 = p_ant_word3 + str(p_cut_wd)
 
   rslt_list = []
   rslt_list.append(p_ant_word1)
@@ -161,9 +161,9 @@ def get_ant_word(words):
             
           # DB Error ?
           except:
-            ant_word1 = ant_word1 + str(cut_wd) + "z1"
-            ant_word2 = ant_word2 + str(cut_wd) + "z2"
-            ant_word3 = ant_word3 + str(cut_wd) + "z3"
+            ant_word1 = ant_word1 + str(cut_wd)
+            ant_word2 = ant_word2 + str(cut_wd)
+            ant_word3 = ant_word3 + str(cut_wd)
 
         elif (u"\t動詞" in nd or
           u"\t形容詞" in nd or
