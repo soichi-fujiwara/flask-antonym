@@ -16,15 +16,11 @@ def decode_utf8(p):
 #-----------------------------------------------------------------------------------------
 # create_antonym_strings
 #-----------------------------------------------------------------------------------------
-def create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3):
+def create_antonym_strings(cut_wd,p_ant_wk_list,ant_word1,ant_word2,ant_word3):
 
   # Delete from Instr = Antonym
-  cut_wd = decode_utf8(cut_wd)
   try:
-    rvs_wd = ant_wk_list[0]
-    if rvs_wd == cut_wd:
-      rvs_wd = ant_wk_list[1]
-      
+    rvs_wd = p_ant_wk_list[0]
     if rvs_wd is not np.nan:
       ant_word1 = ant_word1 + str(rvs_wd)
     else:
@@ -33,10 +29,7 @@ def create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3):
     ant_word1 = ant_word1 + str(cut_wd)
 
   try:
-    rvs_wd = ant_wk_list[1]
-    if rvs_wd == cut_wd:
-      rvs_wd = ant_wk_list[2]
-
+    rvs_wd = p_ant_wk_list[1]
     if rvs_wd is not np.nan:
       ant_word2 = ant_word2 + str(rvs_wd)
     else:
@@ -45,7 +38,7 @@ def create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3):
     ant_word2 = ant_word2 + str(cut_wd)
 
   try:
-    rvs_wd = ant_wk_list[2]
+    rvs_wd = p_ant_wk_list[2]
     if rvs_wd is not np.nan:
       ant_word3 = ant_word3 + str(rvs_wd)
     else:
@@ -133,13 +126,13 @@ def get_ant_word(words):
 
               for doc in docs:
                 wk = doc.to_dict()["ant1"]
-                ant_wk_list.append(decode_utf8(wk))
+                ant_wk_list.append(wk)
                 cache_write_list.append(wk)
                 wk = doc.to_dict()["ant2"]
-                ant_wk_list.append(decode_utf8(wk))
+                ant_wk_list.append(wk)
                 cache_write_list.append(wk)
                 wk = doc.to_dict()["ant3"]
-                ant_wk_list.append(decode_utf8(wk))
+                ant_wk_list.append(wk)
                 cache_write_list.append(wk)
 
               #------------------------------------------------------------------
