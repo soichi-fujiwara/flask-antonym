@@ -44,7 +44,7 @@ def create_antonym_strings(p_cut_wd,p_ant_wk_list,p_ant_word1,p_ant_word2,p_ant_
     else:
       p_ant_word3 = p_ant_word3 + str(p_cut_wd) + "c2"
   except:
-    ant_word3 = ant_word3 + str(p_cut_wd) + "c3"
+    p_ant_word3 = p_ant_word3 + str(p_cut_wd) + "c3"
 
   rslt_list = []
   rslt_list.append(p_ant_word1)
