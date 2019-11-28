@@ -46,12 +46,12 @@ def create_antonym_strings(p_cut_wd,p_ant_wk_list,p_ant_word1,p_ant_word2,p_ant_
   except:
     ant_word3 = ant_word3 + str(p_cut_wd)
 
-  rt_ant_list = []
-  rt_ant_list.append(p_ant_word1)
-  rt_ant_list.append(p_ant_word2)
-  rt_ant_list.append(p_ant_word3)
+  rslt_list = []
+  rslt_list.append(p_ant_word1)
+  rslt_list.append(p_ant_word2)
+  rslt_list.append(p_ant_word3)
 
-  return rt_ant_list
+  return rslt_list
 
 #-----------------------------------------------------------------------------------------
 # main
@@ -154,10 +154,10 @@ def get_ant_word(words):
             #-------------------------------------------------------------------
             # create antonym strings
             #-------------------------------------------------------------------
-            rt_list = create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3)
-            ant_word1 = rt_list[0]
-            ant_word2 = rt_list[1]
-            ant_word3 = rt_list[2]
+            rt_list2 = create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3)
+            ant_word1 = rt_list2[0]
+            ant_word2 = rt_list2[1]
+            ant_word3 = rt_list2[2]
             
           # DB Error ?
           except:
@@ -219,10 +219,10 @@ def get_ant_word(words):
             #-------------------------------------------------------------------
             # create antonym strings
             #-------------------------------------------------------------------
-            rt_list = create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3)
-            ant_word1 = rt_list[0]
-            ant_word2 = rt_list[1]
-            ant_word3 = rt_list[2]
+            rt_list2 = create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3)
+            ant_word1 = rt_list2[0]
+            ant_word2 = rt_list2[1]
+            ant_word3 = rt_list2[2]
 
           # DB Error ?
           except:
