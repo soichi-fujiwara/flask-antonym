@@ -161,9 +161,9 @@ def get_ant_word(words):
             
           # DB Error ?
           except:
-            ant_word1 = ant_word1 + str(cut_wd)
-            ant_word2 = ant_word2 + str(cut_wd)
-            ant_word3 = ant_word3 + str(cut_wd)
+            ant_word1 = ant_word1 + str(cut_wd) + "z1"
+            ant_word2 = ant_word2 + str(cut_wd) + "z2"
+            ant_word3 = ant_word3 + str(cut_wd) + "z3"
 
         elif (u"\t動詞" in nd or
           u"\t形容詞" in nd or
