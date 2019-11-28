@@ -18,7 +18,8 @@ def decode_utf8(p):
 #-----------------------------------------------------------------------------------------
 def create_antonym_strings(cut_wd,ant_wk_list,ant_word1,ant_word2,ant_word3):
 
-  # Delete from Instr = Antonym 
+  # Delete from Instr = Antonym
+  cut_wd = decode_utf8(cut_wd)
   try:
     rvs_wd = ant_wk_list[0]
     if rvs_wd == cut_wd:
