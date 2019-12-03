@@ -8,6 +8,22 @@ from firebase_admin import firestore
 import redis
 
 #-----------------------------------------------------------------------------------------
+# correction_sentence
+#-----------------------------------------------------------------------------------------
+def correction_sentence(p_str):
+  
+  p_str = p_str.replace('るさせるた','らせた')
+  p_str = p_str.replace('めるられた','られた')
+  p_str = p_str.replace('しいない','しくない')
+  p_str = p_str.replace('しいます','しいです')
+  p_str = p_str.replace('るない','ない')
+  p_str = p_str.replace('るます','ます')
+  p_str = p_str.replace('きるな','きな')
+  p_str = p_str.replace('るた','った')
+
+  return p_str
+
+#-----------------------------------------------------------------------------------------
 # decode_utf8
 #-----------------------------------------------------------------------------------------
 def decode_utf8(p):
@@ -237,9 +253,9 @@ def get_ant_word(words):
           ant_word3 = ant_word3 + str(cut_wd)
           
   #Return Data
-  word_cng_list.append(ant_word1)
-  word_cng_list.append(ant_word2)
-  word_cng_list.append(ant_word3)
+  word_cng_list.append(correction_sentence(ant_word1))
+  word_cng_list.append(correction_sentence(ant_word2))
+  word_cng_list.append(correction_sentence(ant_word3))
   #-------------------------------------------------
   # ◆2. そのまま対義語化
   #-------------------------------------------------
