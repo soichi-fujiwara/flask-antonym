@@ -79,9 +79,9 @@ def get_ant_word(words):
   #-----------------------------------------------------------------------------------------
   # Redis Connect
   #-----------------------------------------------------------------------------------------
-  host_name = 'redis-12496.c1.asia-northeast1-1.gce.cloud.redislabs.com'
-  port_no = xxxxx
-  pass_cd = 'yyyyy'
+  host_name = 'xxxxx'
+  port_no = yyyyy
+  pass_cd = 'zzzzz'
 
   try:
     pool = redis.ConnectionPool(host=host_name, port=port_no, password=pass_cd, db=0)
