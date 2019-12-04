@@ -48,6 +48,21 @@ iframe{
 	position:relative !important;
 	top:3px !important;
 }
+svg{
+	height: 100vh;
+	width: 100vw;
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin:0;
+	padding:0;
+}
+#wave_box{
+	position:fixed;
+	bottom:130px;
+	height:130px;
+	z-index:-100;
+}
 /*No Tablet( = SP)*/
 @media (max-width: 767px) {
 	#main_title_min{
