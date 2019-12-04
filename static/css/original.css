@@ -7,12 +7,19 @@ body{
 button{
 	text-align:center;
 }
+
 #main_title_min{
 	text-align:center;
 	font-size:20px;
 	margin:60px 0 0 0;	
 	font-family: 'Kosugi Maru', sans-serif;
 }
+//No Tablet( = SP)
+@media (max-width: 767px) {
+	#main_title_min{
+		margin:30px 0 0 0;	
+}
+
 #main_title_big{
 	text-align:center;
 	font-size:35px;
