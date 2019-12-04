@@ -12,8 +12,10 @@ import redis
 #-----------------------------------------------------------------------------------------
 def correction_sentence(p_str):
   
+  p_str = p_str.replace('めるられました','られました')
   p_str = p_str.replace('るさせるた','らせた')
   p_str = p_str.replace('めるられた','られた')
+  p_str = p_str.replace('るました','ました')
   p_str = p_str.replace('しいない','しくない')
   p_str = p_str.replace('しいます','しいです')
   p_str = p_str.replace('るない','ない')
