@@ -14,7 +14,7 @@ button{
 	margin:60px 0 0 0;	
 	font-family: 'Kosugi Maru', sans-serif;
 }
-//No Tablet( = SP)
+/*No Tablet( = SP)*/
 @media (max-width: 767px) {
 	#main_title_min{
 		margin:30px 0 0 0;	
