@@ -59,8 +59,8 @@ svg{
 	padding:0;
 }
 #wave_box{
-	position:fixed;
-	bottom:130px;
+	position:relative;
+	bottom:0px;
 	height:130px;
 	z-index:-100;
 	width:100%;
@@ -70,14 +70,5 @@ svg{
 @media screen and (max-width: 767px) { 
 	#main_title_min{ 
 		margin:30px 0 0 0;
-	}
-	svg{
-		position: relative;
-		bottom:0px;
-		height:200px; 
-	} 
-	#wave_box{
-		position:relative;
-		bottom:0px;
 	}
 } 
