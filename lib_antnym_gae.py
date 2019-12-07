@@ -250,9 +250,9 @@ def get_ant_word(words):
 
         else:
           #特定の動名詞etc 以外
-          ant_word1 = ant_word1 + str(cut_wd)
-          ant_word2 = ant_word2 + str(cut_wd)
-          ant_word3 = ant_word3 + str(cut_wd)
+          ant_word1 = ant_word1 + str(cut_wd.replace('@',''))
+          ant_word2 = ant_word2 + str(cut_wd.replace('@',''))
+          ant_word3 = ant_word3 + str(cut_wd.replace('@',''))
           
   #Return Data
   word_cng_list.append(correction_sentence(ant_word1))
