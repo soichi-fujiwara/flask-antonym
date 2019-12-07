@@ -5,7 +5,7 @@ import random
 
 #対義語生成
 import lib_antnym_gae as ant
-import Mecab
+import MeCab
 
 
 app = Flask(__name__)
