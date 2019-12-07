@@ -250,9 +250,9 @@ def get_ant_word(words):
 
         else:
           #特定の動名詞etc 以外
-          ant_word1 = ant_word1 + str(cut_wd.replace('@',''))
-          ant_word2 = ant_word2 + str(cut_wd.replace('@',''))
-          ant_word3 = ant_word3 + str(cut_wd.replace('@',''))
+          ant_word1 = ant_word1 + str(cut_wd)
+          ant_word2 = ant_word2 + str(cut_wd)
+          ant_word3 = ant_word3 + str(cut_wd)
           
   #Return Data
   word_cng_list.append(correction_sentence(ant_word1))
@@ -312,8 +312,12 @@ def get_ant_word(words):
   except ValueError as error:
     pass
   
-  if len(ret_list) == 0:
-    ret_list = ['該当なし']
+  ret_list_fix = []
+  for rlst in ret_list:
+    ret_list_fix.append(rlst.replace('@',''))
+  
+  if len(ret_list_fix) == 0:
+    ret_list_fix = ['該当なし']
 
   ant_word1 = ''
   ant_word2 = ''
@@ -322,4 +326,4 @@ def get_ant_word(words):
   cache_write_list = []
   word_cng_list = []
   
-  return ret_list
+  return ret_list_fix
