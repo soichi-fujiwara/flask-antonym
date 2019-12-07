@@ -4,8 +4,8 @@ from flask import Flask, render_template, request, redirect, url_for
 import random
 
 #対義語生成
-#import lib_wordRevChange as lw
 import lib_antnym_gae as ant
+import Mecab
 
 
 app = Flask(__name__)
