@@ -42,7 +42,7 @@ def index():
         break
 
       if words_2 != words: 
-        ant_word_list = replace(ant.get_ant_word(words_2),'@','')
+        ant_word_list = ant.get_ant_word(words_2).replace('@','')
       
     return render_template('index.html',auto_comp=auto_comp,in_words=words,ant_word_list=ant_word_list)
   else:
