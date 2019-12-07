@@ -325,5 +325,6 @@ def get_ant_word(words):
   get_data = ''
   cache_write_list = []
   word_cng_list = []
+  ret_list = []
   
   return ret_list_fix
