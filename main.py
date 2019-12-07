@@ -26,20 +26,23 @@ def index():
     
     #2回目
     words_2 = words
-    tokenizer = MeCab.Tagger("")
     if ant_word_list == ['該当なし']:
+      tokenizer = MeCab.Tagger("")
       for num in range(2,len(words)-2):
         node = tokenizer.parse(words[num:]).split("\n")
         for nd in node:
-          #表層形(IN)=発音が一致する → 辞書に単語登録がある可能性が高い性質を利用
+          #表層形(IN) = 発音 → 一般的な単語として辞書に登録されている可能性が高い性質を利用
           # 表層形(IN) : words[num:]
           # 発音       : nd.split(',')[-1] (最終項目)
           if words[num:] == nd.split(',')[-1]:
             words_2 = words[0:num] + '@' + words[num:]
             break
+        else:
+          continue
+        break
 
       if words_2 != words: 
-        ant_word_list = replace(ant.get_ant_word(words),'@','')
+        ant_word_list = replace(ant.get_ant_word(words_2),'@','')
       
     return render_template('index.html',auto_comp=auto_comp,in_words=words,ant_word_list=ant_word_list)
   else:
