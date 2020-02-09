@@ -12,13 +12,13 @@ button{
 	text-align:center;
 	font-size:16px;
 	margin:60px 0 0 0;	
-	font-family: 'Kosugi Maru', sans-serif;
+	/*font-family: 'Kosugi Maru', sans-serif;*/
 }
 
 #main_title_big{
 	text-align:center;
-	font-size:35px;
-	margin:0 0 10px 0;
+	font-size:30px;
+	margin:0 0 5px 0;
 	/*font-family: 'Kosugi Maru', sans-serif;*/
 }
 #main_title_info{
